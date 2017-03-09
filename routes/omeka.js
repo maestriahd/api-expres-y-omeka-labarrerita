@@ -4,11 +4,11 @@ var router = express.Router();
 var request = require('request');
 var async = require('async');
 
-const API_KEY = '';  // constante para guardar el API key del omeka
+const API_KEY = 'b36f2ded198f5fef066d15619441dd4a1fba1cf9';  // constante para guardar el API key del omeka
 
 // objeto que guarda la configuración de la conexion al Omeka
 var server = {
-  baseUrl: '', // la URL del API (http://miomeka.org/api)
+  baseUrl: 'http://salondearte.omeka.net/api', // la URL del API (http://miomeka.org/api)
   uri: '',
   method: 'GET', // método que vamos a usar
   qs: {
@@ -40,14 +40,14 @@ router.get('/', function(req, res) {
         if (!error && response.statusCode == 200) {
           // sigue el flujo de acciones de la cascada entregando el primer
           // elemento del objeto recibido
-          callback(null, body[0]);
+          callback(null, body[0], body);
         }
       });
     },
     // Obtiene la información de la colección
     // La función recibe lo entregado en el anterior paso en el primer parámetro
     // `item`
-    function(item, callback) {
+    function(item, items, callback) {
       console.log('peticion a /collections');
       // actualiza la dirección del recurso a consultar en el objeto de
       // configuración de request
@@ -63,14 +63,14 @@ router.get('/', function(req, res) {
         if (!error && response.statusCode == 200) {
           // sigue el flujo de acciones de la cascada, entrega al siguiente paso
           // el resultado tanto de la primera, como de esta segunda acción
-          callback(null, item, body);
+          callback(null, item,items, body);
         }
       });
     },
     // Obtiene la información de la archivos asociados
     // La función recibe lo entregado en los anteriores pasos en los parámetros
     // `item` y `collection`
-    function(item, collection, callback) {
+    function(item, items,collection, callback) {
       console.log('peticion a /files');
 
       // crea un nuevo objeto de configuración para Request con la información
@@ -96,20 +96,21 @@ router.get('/', function(req, res) {
         if (!error && response.statusCode == 200) {
           // sigue el flujo de acciones de la cascada, entrega al siguiente paso
           // el resultado tanto de esta como las acciones anteriores
-          callback(null, item, collection, body);
+          callback(null, item, items, collection, body);
         }
       });
     }
   ],
   // finalizan las acciones de la cascada, esta función se ejecuta UNICAMENTE
   // al finalizar el proceso
-  function (err, item, collection, files) {
+  function (err, item, items, collection, files) {
     // si se presentó algún error lo imprime en la consola
     if (err){
       console.log(err);
     }
     // Hace el render de la vista con la informacion obtenida del Omeka
     res.render('omeka', {
+      items: items,
       item: item,
       collection: collection,
       files: files
