@@ -5,7 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var hbs = require('handlebars');
+var hbs = require('hbs');
 
 // IMPORTA RUTAS
 // las rutas son los archivos que ejecutan la lógica en el servidor
@@ -27,6 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 // utiliza Handlebars
 // http://handlebarsjs.com/
 app.set('view engine', 'hbs');
+
 // registra un nuevo helper
 // {{ifeq}}
 hbs.registerHelper('ifeq', function(a,b,opts){
@@ -34,6 +35,7 @@ hbs.registerHelper('ifeq', function(a,b,opts){
     return opts.fn(this);
   }
 });
+
 
 // configuraciones adicionales
 // por ahora no tocar!!

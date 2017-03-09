@@ -64,6 +64,7 @@ router.get('/', function(req, res) {
           // sigue el flujo de acciones de la cascada, entrega al siguiente paso
           // el resultado tanto de la primera, como de esta segunda acción
           callback(null, item,items, body);
+
         }
       });
     },
@@ -71,6 +72,7 @@ router.get('/', function(req, res) {
     // La función recibe lo entregado en los anteriores pasos en los parámetros
     // `item` y `collection`
     function(item, items,collection, callback) {
+
       console.log('peticion a /files');
 
       // crea un nuevo objeto de configuración para Request con la información
@@ -112,6 +114,7 @@ router.get('/', function(req, res) {
     res.render('omeka', {
       items: items,
       item: item,
+      items: items,
       collection: collection,
       files: files
     });
