@@ -7,13 +7,19 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
 
+
+var app = express();
+
 // IMPORTA RUTAS
 // las rutas son los archivos que ejecutan la lógica en el servidor
 // cuando un cliente hace una petición. Los archivos están guardados
 // en el directorio `routes`
 var index = require('./routes/index');
 var users = require('./routes/users');
-var gatos = require('./routes/gato');
+var even = require('./routes/eventos');
+var convoc = require('./routes/convocatorias');
+var art = require('./routes/articulos');
+var res = require('./routes/resenas');
 var omeka = require('./routes/omeka');
 // **** PARA AGREGAR UNA NUEVA RUTA  ****
 // descomente y cambie los valores de la siguiente línea
@@ -50,8 +56,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // INTEGRACION DE LAS RUTAS EN LA APLICACION
 // ejecuta el codigo de JS cuando es llamado desde una URL por el cliente
 app.use('/', index);
-app.use('/hola', users);
-app.use('/gatos', gatos);
+app.use('/users', users);
+app.use('/eventos', even);
+app.use('/convocatorias', convoc);
+app.use('/articulos', art);
+app.use('/resenas', res);
 app.use('/omeka', omeka);
 // **** PARA AGREGAR UNA NUEVA RUTA  ****
 // descomente y cambie los valores de la siguiente línea
