@@ -1,9 +1,5 @@
-<h1>VI SALÓN MAESTRO: EL ERROR COMO POSIBILIDAD</h1>
+<h2>VI SALÓN MAESTRO: EL ERROR COMO POSIBILIDAD</h2>
 
-<!-- recorre todos los campos de los items para extraer el nombre -->
-{{#each item.element_texts}}
-    <h1>{{this.text}}</h1>
-{{/each}}
 
 <h2>Colección</h2>
 <!-- muestra la información de las colecciones -->
@@ -22,10 +18,12 @@
 <!-- recorre todos los elementos -->
 {{#each items}}
   <!-- recorre la lista de textos -->
+
   {{#each this.element_texts}}
     <!-- si el texto es 'Title' -->
       {{#ifeq this.element.name 'Title'}}
         <h4>{{this.text}}</h4>
+
       {{/ifeq}}
     <!-- si el texto es 'Subject' -->
       {{#ifeq this.element.name 'Subject'}}
